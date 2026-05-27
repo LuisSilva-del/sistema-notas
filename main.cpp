@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -13,6 +14,8 @@ int main()
     int qtdDisciplinas;
 
     // Processamento
+
+    //LEITURA DE ALUNOS (Commit 1)
     cout << "=== SISTEMA DE NOTAS v4.0 ===" << endl;
 
     do
@@ -29,6 +32,7 @@ int main()
         getline(cin, nomes[i]);
     }
 
+    //NOTAS E MÉDIAS (Commit 2)
     do
     {
         cout << "\nQuantidade de disciplinas (1 a 5): ";
@@ -46,7 +50,7 @@ int main()
                 cout << "  Disciplina " << j + 1 << " (0 a 10): ";
                 cin >> notas[i][j];
             } while (notas[i][j] < 0 || notas[i][j] > 10);
-            
+
             soma += notas[i][j];
         }
         media[i] = soma / qtdDisciplinas;
@@ -59,6 +63,7 @@ int main()
         cout << " " << i + 1 << ". " << nomes[i] << endl;
     }
 
+    //CLASSIFICAÇÃO E RELATÓRIO (Commit 3)
     cout << "\n=== RELATORIO DE NOTAS ===" << endl;
     int aprovados = 0, recuperacao = 0, reprovados = 0;
 
@@ -84,6 +89,39 @@ int main()
 
     cout << "\n=== RESUMO FINAL ===" << endl;
     cout << " Aprovados: " << aprovados << " | Em Recuperacao: " << recuperacao << " | Reprovados: " << reprovados << endl;
+
+    //SALVAR EM ARQUIVO (Commit 4)
+    ofstream arquivo("relatorio.txt");
+
+    if (arquivo.is_open())
+    {
+        arquivo << "==== RELATÓRIO ====" << endl;
+        for (int i = 0; i < qtdAlunos; i++)
+        {
+            arquivo << nomes[i] << " -- Média --" << media[i] << " - ";
+            if (media[i] >= 7)
+            {
+                arquivo << " APROVADO! " << endl;
+            }
+            else if (media[i] >= 5)
+            {
+                arquivo << " RECUPERAÇÃO! " << endl;
+            }
+            else
+            {
+                arquivo << " REPROVADO! " << endl;
+            }
+        }
+        arquivo << "\nResumo: " << aprovados << "aprovados," << recuperacao << " em recuperação," << reprovados << "reprovados." << endl;
+
+        arquivo.close();
+
+        cout << "\nRelatorio salvo com sucesso!" << endl;
+    }
+    else
+    {
+        cout << "Erro ao criar arquivo." << endl;
+    }
 
     return 0;
 }
