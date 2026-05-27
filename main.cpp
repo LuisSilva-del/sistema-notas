@@ -1,22 +1,50 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <windows.h>
 
 using namespace std;
 
 int main()
 {
+        SetConsoleOutputCP(65001);
     // Entrada
     string nomes[20];
     int qtdAlunos;
     float notas[20][5];
     float media[20];
     int qtdDisciplinas;
+    int opcaoInicial;
 
     // Processamento
 
-    //LEITURA DE ALUNOS (Commit 1)
+    // LEITURA DE ALUNOS (Commit 1)
     cout << "=== SISTEMA DE NOTAS v4.0 ===" << endl;
+    cout << " 1 --> Novo relatório" << endl;
+    cout << " 2 --> Ver relatório salvo" << endl;
+    cout << "Escolha uma opção:" << endl;
+    cin >> opcaoInicial;
+
+    // LEITURA DE ARQUIVO (Commit 5)
+    if (opcaoInicial == 2)
+    {
+        ifstream leitura("relatorio.txt");
+        if (leitura.is_open())
+        {
+            string linha;
+            cout << "\n";
+            while (getline(leitura, linha))
+            {
+                cout << linha << endl;
+            }
+            leitura.close();
+        }
+        else
+        {
+            cout << "Nenhum relatório encontrado." << endl;
+        }
+        return 0;
+    }
 
     do
     {
@@ -32,7 +60,7 @@ int main()
         getline(cin, nomes[i]);
     }
 
-    //NOTAS E MÉDIAS (Commit 2)
+    // NOTAS E MÉDIAS (Commit 2)
     do
     {
         cout << "\nQuantidade de disciplinas (1 a 5): ";
@@ -63,7 +91,7 @@ int main()
         cout << " " << i + 1 << ". " << nomes[i] << endl;
     }
 
-    //CLASSIFICAÇÃO E RELATÓRIO (Commit 3)
+    // CLASSIFICAÇÃO E RELATÓRIO (Commit 3)
     cout << "\n=== RELATORIO DE NOTAS ===" << endl;
     int aprovados = 0, recuperacao = 0, reprovados = 0;
 
@@ -90,7 +118,7 @@ int main()
     cout << "\n=== RESUMO FINAL ===" << endl;
     cout << " Aprovados: " << aprovados << " | Em Recuperacao: " << recuperacao << " | Reprovados: " << reprovados << endl;
 
-    //SALVAR EM ARQUIVO (Commit 4)
+    // SALVAR EM ARQUIVO (Commit 4)
     ofstream arquivo("relatorio.txt");
 
     if (arquivo.is_open())
