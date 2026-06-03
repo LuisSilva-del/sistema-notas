@@ -1,4 +1,4 @@
-# 📊 Sistema de Gerenciamento de Notas v4.0
+# 📊 Sistema de Gerenciamento de Notas v4.1
 
 Um sistema em linha de comando robusto desenvolvido em **C++** para automatizar o cadastro de alunos, lançamento de notas por disciplinas, cálculo de médias acadêmicas e persistência de dados em arquivos de texto físicos. Projeto ideal para fins acadêmicos e consolidação de conceitos estruturais de programação.
 
@@ -15,6 +15,12 @@ Um sistema em linha de comando robusto desenvolvido em **C++** para automatizar 
     * ❌ **Reprovado:** Média < 5.0
 * **Resumo Estatístico:** Painel final exibindo o total de alunos aprovados, em recuperação e reprovados em tempo real.
 * **Persistência de Dados (Banco de Arquivo):** Exportação formatada de todo o relatório final para um arquivo físico (`relatorio.txt`), permitindo consultas rápidas posteriores.
+- Cadastro de alunos e notas por disciplina
+- Cálculo de médias por aluno
+- Classificação: Aprovado, Recuperação ou Reprovado
+- Relatório salvo em arquivo .txt com data e hora
+- Leitura de relatório salvo
+- Menu "Sobre o sistema"
 
 ---
 
