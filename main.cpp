@@ -11,6 +11,7 @@ int main()
     SetConsoleOutputCP(65001);
 
     // Entrada
+
     string nomes[20];
     int qtdAlunos = 0;
     float notas[20][5];
@@ -18,60 +19,59 @@ int main()
     int qtdDisciplinas;
     int opcaoInicial;
 
-    do
+    // LEITURA DE ALUNOS (Commit 1)
+    cout << "\n=== SISTEMA DE NOTAS v4.0 ===" << endl;
+    cout << " 1 -- Novo relatório" << endl;
+    cout << " 2 -- Ver relatório salvo" << endl;
+    cout << " 3 -- Sobre o sistema" << endl;
+    cout << " 4 -- Relatório de reprovados" << endl;
+    cout << "Escolha uma opção: ";
+    cin >> opcaoInicial;
+
+    // LEITURA DE ARQUIVO (Commit 5)
+
+    if (opcaoInicial == 3)
     {
-        // LEITURA DE ALUNOS (Commit 1)
-        cout << "\n=== SISTEMA DE NOTAS v4.0 ===" << endl;
-        cout << " 1 --> Novo relatório" << endl;
-        cout << " 2 --> Ver relatório salvo" << endl;
-        cout << " 3 --> Sobre o sistema" << endl;
-        cout << " 4 --> Relatório de reprovados" << endl;
-        cout << "Escolha uma opção: ";
-        cin >> opcaoInicial;
+        cout << "\n=== SOBRE ===" << endl;
+        cout << "Sistema de Notas v4.1" << endl;
+        cout << "Desenvolvido por: Luis Miguel Pereira da Silva" << endl;
+        cout << "==============================================";
 
-        // LEITURA DE ARQUIVO (Commit 5)
+        return 0;
+    }
 
-        if (opcaoInicial == 3)
+    if (opcaoInicial == 4)
+    {
+        ofstream arqReprovados("reprovados.txt");
+
+        if (arqReprovados.is_open())
         {
-            cout << "\n=== SOBRE ===" << endl;
-            cout << "Sistema de Notas v4.1" << endl;
-            cout << "Desenvolvido por: Luis Miguel Pereira da Silva" << endl;
-            cout << "============================";
-        }
+            arqReprovados << "=== ALUNOS REPROVADOS ===" << endl;
+            int contReprovados = 0;
 
-        if (opcaoInicial == 4)
+            for (int i = 0; i < qtdAlunos; i++)
+            {
+                if (media[i] < 5.0)
+                {
+                    arqReprovados << "Aluno: " << nomes[i] << " | Média: " << media[i] << endl;
+                    contReprovados++;
+                }
+            }
+
+            if (contReprovados == 0)
+            {
+                arqReprovados << "Nenhum aluno reprovado cadastrado." << endl;
+            }
+
+            arqReprovados.close();
+            cout << "\nArquivo 'reprovados.txt' gerado!" << endl;
+        }
+        else
         {
-            ofstream arqReprovados("reprovados.txt");
-
-            if (arqReprovados.is_open())
-            {
-                arqReprovados << "=== ALUNOS REPROVADOS ===" << endl;
-                int contReprovados = 0;
-
-                for (int i = 0; i < qtdAlunos; i++)
-                {
-                    if (media[i] < 5.0)
-                    {
-                        arqReprovados << "Aluno: " << nomes[i] << " | Média: " << media[i] << endl;
-                        contReprovados++;
-                    }
-                }
-
-                if (contReprovados == 0)
-                {
-                    arqReprovados << "Nenhum aluno reprovado cadastrado neste bloco." << endl;
-                }
-
-                arqReprovados.close();
-                cout << "\nArquivo 'reprovados.txt' gerado!" << endl;
-            }
-            else
-            {
-                cout << "Erro ao criar o arquivo de reprovados." << endl;
-            }
+            cout << "Erro ao criar o arquivo." << endl;
         }
-
-    } while (opcaoInicial == 3 || opcaoInicial == 4);
+        return 0;
+    }
 
     if (opcaoInicial == 2)
     {
