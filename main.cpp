@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-        SetConsoleOutputCP(65001);
+    SetConsoleOutputCP(65001);
     // Entrada
     string nomes[20];
     int qtdAlunos;
@@ -16,16 +16,28 @@ int main()
     int qtdDisciplinas;
     int opcaoInicial;
 
-    // Processamento
+    do
+    {
+        // LEITURA DE ALUNOS (Commit 1)
+        cout << "\n=== SISTEMA DE NOTAS v4.0 ===" << endl;
+        cout << " 1 --> Novo relatório" << endl;
+        cout << " 2 --> Ver relatório salvo" << endl;
+        cout << " 3 --> Sobre o sistema" << endl;
+        cout << "Escolha uma opção: ";
+        cin >> opcaoInicial;
 
-    // LEITURA DE ALUNOS (Commit 1)
-    cout << "=== SISTEMA DE NOTAS v4.0 ===" << endl;
-    cout << " 1 --> Novo relatório" << endl;
-    cout << " 2 --> Ver relatório salvo" << endl;
-    cout << "Escolha uma opção:" << endl;
-    cin >> opcaoInicial;
+        // LEITURA DE ARQUIVO (Commit 5) 
 
-    // LEITURA DE ARQUIVO (Commit 5)
+        if (opcaoInicial == 3)
+        {
+            cout << "\n=== SOBRE ===" << endl;
+            cout << "Sistema de Notas v4.1" << endl;
+            cout << "Desenvolvido por: Luis Miguel Pereira da Silva" << endl; 
+            cout << "============================\n";
+        }
+
+    } while (opcaoInicial == 3);
+
     if (opcaoInicial == 2)
     {
         ifstream leitura("relatorio.txt");
