@@ -1,4 +1,4 @@
-# 📊 Sistema de Gerenciamento de Notas v4.1
+# 📊 Sistema de Gerenciamento de Notas v4.1 
 
 Um sistema em linha de comando robusto desenvolvido em **C++** para automatizar o cadastro de alunos, lançamento de notas por disciplinas, cálculo de médias acadêmicas e persistência de dados em arquivos de texto físicos. Projeto ideal para fins acadêmicos e consolidação de conceitos estruturais de programação.
 

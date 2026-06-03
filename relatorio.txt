@@ -1,8 +1,6 @@
-==== RELATÓRIO ====
-o -- Média --6 -  RECUPERAÇÃO! 
-p -- Média --4 -  REPROVADO! 
-q -- Média --4.5 -  REPROVADO! 
-e -- Média --2.25 -  REPROVADO! 
-s -- Média --7 -  APROVADO! 
+Data do relatorio:Wed Jun 03 09:16:16 2026
 
-Resumo: 1aprovados,1 em recuperação,3reprovados.
+==== RELATÓRIO ====
+Luis -- Média --8.5 -  APROVADO! 
+
+Resumo: 1aprovados,0 em recuperação,0reprovados.
