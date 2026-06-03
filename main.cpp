@@ -24,6 +24,7 @@ int main()
         cout << " 1 --> Novo relatório" << endl;
         cout << " 2 --> Ver relatório salvo" << endl;
         cout << " 3 --> Sobre o sistema" << endl;
+        cout << " 4 --> Relatório de reprovados" << endl;
         cout << "Escolha uma opção: ";
         cin >> opcaoInicial;
 
@@ -37,7 +38,7 @@ int main()
             cout << "============================\n";
         }
 
-    } while (opcaoInicial == 3);
+    } while (opcaoInicial == 3 || opcaoInicial == 4);
 
     if (opcaoInicial == 2)
     {
@@ -56,141 +57,176 @@ int main()
         {
             cout << "Nenhum relatório encontrado." << endl;
         }
-        return 0;
-    }
 
-    do
-    {
-        cout << "Quantidade de alunos (1 a 20): ";
-        cin >> qtdAlunos;
-    } while (qtdAlunos < 1 || qtdAlunos > 20);
-
-    cin.ignore();
-
-    for (int i = 0; i < qtdAlunos; i++)
-    {
-        do
+        if (opcaoInicial == 4)
         {
-            cout << " Nome do aluno " << i + 1 << ": ";
-            getline(cin, nomes[i]);
 
-            if (nomes[i] == "")
+        ofstream arqReprovados("reprovados.txt");
+
+        if (arqReprovados.is_open())
+         {
+            arqReprovados << "=== ALUNOS REPROVADOS ===" << endl;
+            int contReprovados = 0;
+
+            for (int i = 0; i < qtdAlunos; i++)
             {
-                cout << "[ERRO] O nome pode ficar em branco! Tente novamente." << endl;
+                if (media[i] < 5.0)
+                {
+                    arqReprovados << "Aluno: " << nomes[i] << " | Média: " << media[i] << endl;
+                    contReprovados++;
+                }
             }
-        } while (nomes[i] == "");
-    }
 
-    // NOTAS E MÉDIAS (Commit 2)
-    do
-    {
-        cout << "\nQuantidade de disciplinas (1 a 5): ";
-        cin >> qtdDisciplinas;
-    } while (qtdDisciplinas < 1 || qtdDisciplinas > 5);
-
-    for (int i = 0; i < qtdAlunos; i++)
-    {
-        cout << "\nNotas de " << nomes[i] << ":" << endl;
-        float soma = 0;
-        for (int j = 0; j < qtdDisciplinas; j++)
-        {
-            do
+            if (contReprovados == 0)
             {
-                cout << "  Disciplina " << j + 1 << " (0 a 10): ";
-                cin >> notas[i][j];
-            } while (notas[i][j] < 0 || notas[i][j] > 10);
-
-            soma += notas[i][j];
-        }
-        media[i] = soma / qtdDisciplinas;
-    }
-
-    // Saída
-    cout << "\n=== ALUNOS CADASTRADOS ===" << endl;
-    for (int i = 0; i < qtdAlunos; i++)
-    {
-        cout << " " << i + 1 << ". " << nomes[i] << endl;
-    }
-
-    // CLASSIFICAÇÃO E RELATÓRIO (Commit 3)
-    cout << "\n=== RELATORIO DE NOTAS ===" << endl;
-    int aprovados = 0, recuperacao = 0, reprovados = 0;
-
-    int indiceMaior = 0;
-    int indiceMenor = 0;
-
-    for (int i = 0; i < qtdAlunos; i++)
-    {
-        if (media[i] > media[indiceMaior])
-        {
-            indiceMaior = i;
-        }
-        if (media[i] < media[indiceMenor]) {
-            indiceMenor = i;
-        }
-    }
-
-    for (int i = 0; i < qtdAlunos; i++)
-    {
-        cout << " " << nomes[i] << " Media: " << media[i] << " - Status: ";
-        if (media[i] >= 7.0)
-        {
-            cout << "Aprovado" << endl;
-            aprovados++;
-        }
-        else if (media[i] >= 5.0)
-        {
-            cout << "Recuperacao" << endl;
-            recuperacao++;
-        }
-        else
-        {
-            cout << "Reprovado" << endl;
-            reprovados++;
-        }
-    }
-
-    cout << "\n=== RESUMO FINAL ===" << endl;
-    cout << " Aprovados: " << aprovados << " | Em Recuperacao: " << recuperacao << " | Reprovados: " << reprovados << endl;
-    cout << "\nMaior Media: " << nomes[indiceMaior] << " (" << media[indiceMaior] << ")" << endl;
-    cout << "Menor Media: " << nomes[indiceMenor] << " (" << media[indiceMenor] << ")" << endl;
-
-    // SALVAR EM ARQUIVO (Commit 4)
-    ofstream arquivo("relatorio.txt");
-
-    if (arquivo.is_open())
-    {
-        time_t agora = time(0);
-        char *dataHora = ctime(&agora);
-        arquivo << "Data do relatorio:" << dataHora << endl;
-
-        arquivo << "==== RELATÓRIO ====" << endl;
-        for (int i = 0; i < qtdAlunos; i++)
-        {
-            arquivo << nomes[i] << " -- Média --" << media[i] << " - ";
-            if (media[i] >= 7)
-            {
-                arquivo << " APROVADO! " << endl;
+                arqReprovados << "Nenhum aluno reprovado cadastrado neste bloco." << endl;
             }
-            else if (media[i] >= 5)
-            {
-                arquivo << " RECUPERAÇÃO! " << endl;
+
+            arqReprovados.close();
+            cout << "\nArquivo 'reprovados.txt' gerado!" << endl;
+
             }
             else
             {
-                arquivo << " REPROVADO! " << endl;
+                cout << "Erro ao criar o arquivo de reprovados." << endl;
+            }
+            return 0;
+        }
+
+        do
+        {
+            cout << "Quantidade de alunos (1 a 20): ";
+            cin >> qtdAlunos;
+        } while (qtdAlunos < 1 || qtdAlunos > 20);
+
+        cin.ignore();
+
+        for (int i = 0; i < qtdAlunos; i++)
+        {
+            do
+            {
+                cout << " Nome do aluno " << i + 1 << ": ";
+                getline(cin, nomes[i]);
+
+                if (nomes[i] == "")
+                {
+                    cout << "[ERRO] O nome pode ficar em branco! Tente novamente." << endl;
+                }
+            } while (nomes[i] == "");
+        }
+
+        // NOTAS E MÉDIAS (Commit 2)
+        do
+        {
+            cout << "\nQuantidade de disciplinas (1 a 5): ";
+            cin >> qtdDisciplinas;
+        } while (qtdDisciplinas < 1 || qtdDisciplinas > 5);
+
+        for (int i = 0; i < qtdAlunos; i++)
+        {
+            cout << "\nNotas de " << nomes[i] << ":" << endl;
+            float soma = 0;
+            for (int j = 0; j < qtdDisciplinas; j++)
+            {
+                do
+                {
+                    cout << "  Disciplina " << j + 1 << " (0 a 10): ";
+                    cin >> notas[i][j];
+                } while (notas[i][j] < 0 || notas[i][j] > 10);
+
+                soma += notas[i][j];
+            }
+            media[i] = soma / qtdDisciplinas;
+        }
+
+        // Saída
+        cout << "\n=== ALUNOS CADASTRADOS ===" << endl;
+        for (int i = 0; i < qtdAlunos; i++)
+        {
+            cout << " " << i + 1 << ". " << nomes[i] << endl;
+        }
+
+        // CLASSIFICAÇÃO E RELATÓRIO (Commit 3)
+        cout << "\n=== RELATORIO DE NOTAS ===" << endl;
+        int aprovados = 0, recuperacao = 0, reprovados = 0;
+
+        int indiceMaior = 0;
+        int indiceMenor = 0;
+
+        for (int i = 0; i < qtdAlunos; i++)
+        {
+            if (media[i] > media[indiceMaior])
+            {
+                indiceMaior = i;
+            }
+            if (media[i] < media[indiceMenor])
+            {
+                indiceMenor = i;
             }
         }
-        arquivo << "\nResumo: " << aprovados << "aprovados," << recuperacao << " em recuperação," << reprovados << "reprovados." << endl;
 
-        arquivo.close();
+        for (int i = 0; i < qtdAlunos; i++)
+        {
+            cout << " " << nomes[i] << " Media: " << media[i] << " - Status: ";
+            if (media[i] >= 7.0)
+            {
+                cout << "Aprovado" << endl;
+                aprovados++;
+            }
+            else if (media[i] >= 5.0)
+            {
+                cout << "Recuperacao" << endl;
+                recuperacao++;
+            }
+            else
+            {
+                cout << "Reprovado" << endl;
+                reprovados++;
+            }
+        }
 
-        cout << "\nRelatorio salvo com sucesso!" << endl;
+        cout << "\n=== RESUMO FINAL ===" << endl;
+        cout << " Aprovados: " << aprovados << " | Em Recuperacao: " << recuperacao << " | Reprovados: " << reprovados << endl;
+        cout << "\nMaior Media: " << nomes[indiceMaior] << " (" << media[indiceMaior] << ")" << endl;
+        cout << "Menor Media: " << nomes[indiceMenor] << " (" << media[indiceMenor] << ")" << endl;
+
+        // SALVAR EM ARQUIVO (Commit 4)
+        ofstream arquivo("relatorio.txt");
+
+        if (arquivo.is_open())
+        {
+            time_t agora = time(0);
+            char *dataHora = ctime(&agora);
+            arquivo << "Data do relatorio:" << dataHora << endl;
+
+            arquivo << "==== RELATÓRIO ====" << endl;
+            for (int i = 0; i < qtdAlunos; i++)
+            {
+                arquivo << nomes[i] << " -- Média --" << media[i] << " - ";
+                if (media[i] >= 7)
+                {
+                    arquivo << " APROVADO! " << endl;
+                }
+                else if (media[i] >= 5)
+                {
+                    arquivo << " RECUPERAÇÃO! " << endl;
+                }
+                else
+                {
+                    arquivo << " REPROVADO! " << endl;
+                }
+            }
+            arquivo << "\nResumo: " << aprovados << "aprovados," << recuperacao << " em recuperação," << reprovados << "reprovados." << endl;
+
+            arquivo.close();
+
+            cout << "\nRelatorio salvo com sucesso!" << endl;
+        }
+        else
+        {
+            cout << "Erro ao criar arquivo." << endl;
+        }
+
+        return 0;
     }
-    else
-    {
-        cout << "Erro ao criar arquivo." << endl;
-    }
-
-    return 0;
-}
+}   
